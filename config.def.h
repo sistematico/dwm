@@ -121,6 +121,8 @@ static Key keys[] = {
 	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ Mod1Mask,             		XK_Tab,    shiftviewclients, { .i = +1 } },
+	{ ShiftMask,             		XK_Tab,    shiftviewclients, { .i = -1 } },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,             			XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -143,9 +145,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 	{ 0, 							0xffab,    spawn, 		   {.v = volumeupcmd } },
 	{ 0, 							0xffad,    spawn, 		   {.v = volumedowncmd } },
+	{ MODKEY, 						XK_v,      spawn, 		   SHCMD("clipmenu") },
 };
 
 /* button definitions */
