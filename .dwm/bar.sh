@@ -32,7 +32,7 @@ NEWS() {
 
 DOWNLOADS() {
     inst=$(ps -ef | grep yt-dlp | grep -v grep | wc -l)
-    [ $inst -gt 0 ] && echo -n "${red} ${inst}${fg}" || echo ""
+    [ $inst -gt 0 ] && echo -n "${red} ${inst}${fg}" || echo ""
 }
 
 CRYPTO() {
@@ -96,7 +96,7 @@ VOL(){
     sink=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1 )
     vol=$( pactl list sinks | grep '^[[:space:]]Volume base:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 
-    echo -n "${yellow} ${vol}%${fg} "
+    echo -n "${yellow} ${vol}%${fg} "
 }
 
 CPU(){
@@ -116,12 +116,10 @@ DISK(){
 
 TIME(){
     time=$(date '+%I:%M%p')
-    echo -n "${cyan} ${time}${fg}"
+    echo -n "${cyan} ${time}${fg}"
 }
 
 while true; do
-    #xsetroot -name "$(printf '%s  %s  %s  %s  %s  %s  %s  %s  %s  %s  %s  %s  %s' "$(NEWS)" "$updates" "$downloads" "$(CRYPTO)" "$(WEATHER)" "$(MOON)" "$(TEMP)" "$(CPU)" "$(MEM)" "$(DISK)" "$(UPTIME)" "$(VOL)" "$(TIME)") "
     xsetroot -name "$(printf '%s %s %s' "$(DOWNLOADS)" "$(TEMP)" "$(VOL)" "$(TIME)")"
     sleep 10
 done
-

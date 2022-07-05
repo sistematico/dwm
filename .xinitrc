@@ -68,7 +68,7 @@ numlockx on &
 #feh --bg-fill $HOME/img/dracula/arch.png &
 feh --bg-fill $HOME/img/unsplash/eberhard-grossgasteiger-8z9nQEZlIZs-unsplash.jpg
 dunst -conf $HOME/.dwm/dunst.conf &
-picom --config $HOME/.dwm/picom.conf &
+#picom --config $HOME/.dwm/picom.conf &
 
 $HOME/.dwm/bar.sh &
 
