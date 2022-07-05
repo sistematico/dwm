@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+pgrep -x thunar | egrep -v "grep|daemon" >/dev/null || /usr/bin/thunar &

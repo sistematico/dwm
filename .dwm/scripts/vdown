@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+################################################################################
+#                                                                              #
+# Arquivo: ~/.dwm/scripts/vdown                                                #
+#                                                                              #
+# Autor: Lucas Saliés Brum a.k.a. sistematico <lucas@archlinux.com.br>         #
+#                                                                              #
+# Criado em: 30/04/2019 13:55:09                                               #
+# Modificado em: 09/08/2021 23:34:37                                           #
+#                                                                              #
+# Este trabalho está licenciado com uma Licença Creative Commons               #
+# Atribuição 4.0 Internacional                                                 #
+# http://creativecommons.org/licenses/by/4.0/                                  #
+#                                                                              #
+################################################################################
+
+[ -f $HOME/.config/user-dirs.dirs ] && source $HOME/.config/user-dirs.dirs
+
+NOME="Video Down"
+NOME_CURTO="VideoDown"
+SECONDS=0
+DIR="${XDG_DESKTOP_DIR:-${HOME}/desk}"
+ICONE="/usr/share/icons/Newaita-dark/.places-ubuntu/64/folder-download.svg"
+LOGS="${DIR}/status.log"
+NOTIFY="$HOME/bin/notify.sh $NOME_CURTO $ICONE $NOME_CURTO" # notify-send -h int:transient:1 -i $ICONE
+YOUTUBE="yt-dlp -q" # "youtube-dl -i -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4"
+HISTORY="/var/tmp/videodown.hist"
+REQUIRED_APPS=("curl" "xclip" "yt-dlp")
+#ARIA="--external-downloader aria2c --external-downloader-args '-c -j 2 -x 2 -k 2M'"
+
+if [ -z "$DESKTOP_SESSION" ]; then
+    NOTIFY="notify-send -h int:transient:1 -i ${ICONE} ${NOME_CURTO}"
+fi
+
+for APP in "${REQUIRED_APPS[@]}"
+do
+   :
+    if ! command -v $APP &> /dev/null
+    then
+        $NOTIFY "${APP} não encontrado, instale-o primeiro."
+        exit
+    fi
+done
+
+checkUrl() {
+	local url=$1
+    padrao='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+    if [[ ! $url =~ $padrao ]]; then
+        false
+    fi
+	true
+}
+
+[ ! -d "$DIR" ] && mkdir -p $DIR
+[ $1 ] && url="$1" || url="$(xclip -o)"
+
+cd $DIR
+
+if [ -z "$url" ]; then
+    $NOTIFY "O link é inválido!"
+elif ! checkUrl ${url}; then
+    $NOTIFY "O link é inválido!"
+else
+    $NOTIFY "Iniciando o download de:\n\n<b>${url}</b>"
+
+    $YOUTUBE $ARIA "${url}" 2> /dev/null
+
+    if [[ $status -ne 0 ]]; then
+        echo "---------------------------------------------------------------" >> "$LOGS"
+        echo "Status:       ERRO" >> "$LOGS"
+        echo "URL:          $url" >>"$LOGS"
+	    $NOTIFY "Erro!"
+    else 
+        $NOTIFY "Sucesso!\n\nDownloads restantes: $(ps aux | grep yt-dlp | egrep -v grep | wc -l)"
+    fi
+fi
