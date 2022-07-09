@@ -11,7 +11,7 @@ static       int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 10;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 10;        /* vertical padding for statusbar */
+static const int vertpadbar         = 15;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "Ubuntu Mono:size=12:antialias=true:autohint=true" };
 static const char dmenufont[]       = "Ubuntu Mono:size=12:antialias=true:autohint=true";
 static const char background[]      = "#282a36";
@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
