@@ -12,8 +12,11 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 10;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 15;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "Ubuntu Mono:size=12:antialias=true:autohint=true" };
-static const char dmenufont[]       = "Ubuntu Mono:size=12:antialias=true:autohint=true";
+static const char *fonts[]          = { 
+	"Ubuntu Mono:size=12:antialias=true:autohint=true",
+	"Material-Design-Iconic-Font:style=Design-Iconic-Font:size=12:antialias=true:autohint=true"	
+};
+static const char dmenufont[]       = "Ubuntu Mono:size=13:antialias=true:autohint=true";
 static const char background[]      = "#282a36";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -28,6 +31,18 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+
+static const char *tagsel[][2] = {
+	{ "#ffffff", "#ff0000" },
+	{ "#ffffff", "#ff7f00" },
+	{ "#000000", "#ffff00" },
+	{ "#000000", "#00ff00" },
+	{ "#ffffff", "#0000ff" },
+	{ "#ffffff", "#4b0082" },
+	{ "#ffffff", "#9400d3" },
+	{ "#000000", "#ffffff" },
+	{ "#ffffff", "#000000" },
+};
 
 static const Rule rules[] = {
 	/* xprop(1):
