@@ -14,7 +14,7 @@ static const int horizpadbar        = 10;        /* horizontal padding for statu
 static const int vertpadbar         = 15;        /* vertical padding for statusbar */
 static const char *fonts[]          = { 
 	"Ubuntu Mono:size=12:antialias=true:autohint=true",
-	"Material-Design-Iconic-Font:pixelsize=16:antialias=true:autohint=true"	
+	"Material:size=13:antialias=true:autohint=true"	
 };
 static const char dmenufont[]       = "Ubuntu Mono:size=13:antialias=true:autohint=true";
 static const char background[]      = "#282a36";
@@ -27,18 +27,18 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const char *tagsel[][2] = {
-	{ "#ffffff", "#ff0000" },
-	{ "#ffffff", "#ff7f00" },
-	{ "#000000", "#ffff00" },
-	{ "#000000", "#00ff00" },
-	{ "#ffffff", "#0000ff" },
-	{ "#ffffff", "#4b0082" },
-	{ "#ffffff", "#9400d3" },
-	{ "#000000", "#ffffff" },
-	{ "#ffffff", "#000000" },
+	{ "#ff0000", "#282a36" },
+	{ "#ff7f00", "#282a36" },
+	{ "#ffff00", "#282a36" },
+	{ "#00ff00", "#282a36" },
+	{ "#0000ff", "#282a36" },
+	{ "#4b0082", "#282a36" },
+	{ "#9400d3", "#282a36" },
+	{ "#ffffff", "#282a36" },
+	{ "#000000", "#282a36" },
 };
 
 static const Rule rules[] = {
@@ -52,6 +52,7 @@ static const Rule rules[] = {
 	{ "st",       NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Code",     NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "Thunar",   NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Spotify",  NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "Agave",    NULL,       NULL,       0,            1,           -1 },
 	{ "mpv",      NULL,       NULL,       0,            1,           -1 },
 	{ "Pavucontrol", NULL,    NULL,       0,            1,           -1 },
@@ -108,7 +109,7 @@ static const char *volumedowncmd[]  = { "pactl", "set-sink-volume", "@DEFAULT_SI
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ Mod4Mask,                     XK_F2,     spawn,          {.v = dmenucmd } },
+	{ Mod1Mask,                     XK_F2,     spawn,          {.v = dmenucmd } },
 	{ MODKEY,             			XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -164,9 +165,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_equal,scratchpad_remove,{0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+	{ 0, 							XK_F1,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch firefox") },
+	{ 0, 							XK_F2,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch st") },
+	{ 0, 							XK_F3,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch code") },
+	{ 0, 							XK_F4,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch thunar") },
 	{ 0, 							0xffab,    spawn, 		   {.v = volumeupcmd } },
 	{ 0, 							0xffad,    spawn, 		   {.v = volumedowncmd } },
 	{ MODKEY, 						XK_v,      spawn, 		   SHCMD("clipmenu") },
+	// { 0, 							XK_KP_4,      spawn, 	   SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
+	// { 0, 							XK_KP_5,      spawn, 	   SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
+	// { 0, 							XK_KP_6,      spawn, 	   SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
 };
 
 /* button definitions */
