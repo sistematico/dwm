@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+[ ! $1 ] && exit
+
+if ! pgrep -x "$1" > /dev/null
+then
+    $1
+fi
+

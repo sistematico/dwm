@@ -9,6 +9,7 @@ red="^c#bf616a^"
 yellow="^c#d7ba7d^"
 blue="^c#5e81ac^"
 magenta="^c#b48ead^"
+orange="^c#fb7d47^"
 
 fixed() {
     printf '%-2s' $1
@@ -20,11 +21,11 @@ SEP(){
 
 NEWS() {
     [ "$(stat -c %y /tmp/news 2>/dev/null | awk '{ print substr($0, 0, 13) }')" = "$(date '+%Y-%m-%d %H')" ] || \
-    curl -sGd 'limit=1&t=all' \
-    -A "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0" \
-    'https://www.reddit.com/r/worldnews.json' | \
-    jq '.data.children[0].data.title' | \
-    sed -e 's/^"//' -e 's/"$//' > /tmp/news
+        curl -sGd 'limit=1&t=all' \
+            -A "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0" \
+            'https://www.reddit.com/r/worldnews.json' | \
+            jq '.data.children[0].data.title' | \
+            sed -e 's/^"//' -e 's/"$//' > /tmp/news
 
     news=$(cat /tmp/news | awk -v len=50 '{ if (length($0) > len) print substr($0, 1, len-3) "..."; else print; }')
     echo -n "${red} ${fg}${news}"
@@ -32,7 +33,7 @@ NEWS() {
 
 DOWNLOADS() {
     inst=$(ps -ef | grep yt-dlp | grep -v grep | wc -l)
-    [ $inst -gt 0 ] && echo -n "${red} ${inst}${fg}" || echo ""
+    [ $inst -gt 0 ] && echo -n "${orange}${inst}${fg}" || echo ""
 }
 
 CRYPTO() {
@@ -81,7 +82,7 @@ UPDATES() {
 TEMP(){
     temp=$(sensors | grep 'AMD TSI Addr 98h:' | awk 'NR==1 {print $5}' | sed 's/+//g')
     #temp=$(sensors | grep 'Package id 0:' | awk 'NR==1 {print $4}' | sed 's/+//g')
-    echo -n "${red} ${temp}${fg}"
+    echo -n "${red}${temp}${fg}"
 }
 
 UPTIME(){
@@ -90,19 +91,16 @@ UPTIME(){
 }
 
 VOL(){
-    #vol=$(amixer sget Master | grep 'Right:' | awk -F'[][]' '{print $2}')
-    #vol=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-
     sink=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1 )
-    vol=$( pactl list sinks | grep '^[[:space:]]Volume base:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
-
-    echo -n "${yellow} ${vol}%${fg} "
+    #vol=$( pactl list sinks | grep '^[[:space:]]Volume base:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
+    vol=$( pactl list sinks | grep '^[[:space:]]Volume: front-left:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
+    echo -n "${yellow}${vol}%${fg} "
 }
 
 CPU(){
     cpu=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}')
-    formatedcpu=$(fixed $cpu)
-    echo -n "${blue}${formatedcpu}%${fg}"
+    #cpu=$(fixed $cpu)
+    echo -n "${blue}${cpu}%${fg}"
 }
 
 MEM(){
@@ -111,15 +109,15 @@ MEM(){
 }
 
 DISK(){
-    echo -n "${red}$(df -h | awk '/home/{print $5}')${fg}"
+    echo -n "${red}$(df -h | awk '/home/{print $5}')${fg}"
 }
 
 TIME(){
     time=$(date '+%I:%M%p')
-    echo -n "${cyan} ${time}${fg}"
+    echo -n "${cyan} ${time}${fg}"
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s' "$(DOWNLOADS)" "$(TEMP)" "$(VOL)" "$(TIME)")"
-    sleep 10
+    xsetroot -name "$(printf '%s %s %s %s %s %s' "$(DOWNLOADS)" "$(MOON)" "$(CPU)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
+    sleep 5
 done
