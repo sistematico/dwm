@@ -65,16 +65,16 @@ ln -sfT \
 # Autostart
 xrandr --output HDMI-1 --primary --mode "2560x1440" &
 numlockx on &
-feh --bg-fill $HOME/img/unsplash/eberhard-grossgasteiger-8z9nQEZlIZs-unsplash.jpg
+#feh --bg-fill $HOME/img/unsplash/eberhard-grossgasteiger-8z9nQEZlIZs-unsplash.jpg
+feh --bg-fill $HOME/img/laracasts/inertia.png
 dunst -conf $HOME/.dwm/dunst.conf &
 picom --config $HOME/.dwm/picom.conf &
 
 $HOME/.dwm/bar.sh &
+$HOME/bitbucket/dwm-tools/xssstate/xsidle.sh slock &
 
 #xautolock -time 10 -locker slock -nowlocker slock -detectsleep -corners 000+ -cornerdelay 3 &
 #xautolock -time 5 -locker fuzzy_lock -notify 20 -notifier 'xset dpms force off' &
 #exec --no-startup-id xautolock -notify 30 -notifier "notify-send -u critical -t 10000 'LOCKING in 30s'" -time 15 -locker "systemctl suspend" -corners "--00"
-
-$HOME/bitbucket/dwm-tools/xssstate/xsidle.sh slock &
 
 exec dwm
