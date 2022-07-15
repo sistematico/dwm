@@ -45,7 +45,7 @@ CRYPTO() {
 WEATHER() {
     [ "$(stat -c %y /tmp/weather 2>/dev/null | awk '{ print substr($0, 0, 13) }')" = "$(date '+%Y-%m-%d %H')" ] || curl -sf 'wttr.in/Campo%20Grande?format=%t' > /tmp/weather
     weather="$(cat /tmp/weather)"
-    echo -n "$yellow ${fg}${weather}"
+    echo -n "${yellow} ${fg}${weather}"
 }
 
 MOON() {
@@ -81,7 +81,6 @@ UPDATES() {
 
 TEMP(){
     temp=$(sensors | grep 'AMD TSI Addr 98h:' | awk 'NR==1 {print $5}' | sed 's/+//g')
-    #temp=$(sensors | grep 'Package id 0:' | awk 'NR==1 {print $4}' | sed 's/+//g')
     echo -n "${red}${temp}${fg}"
 }
 
@@ -94,13 +93,12 @@ VOL(){
     sink=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1 )
     #vol=$( pactl list sinks | grep '^[[:space:]]Volume base:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
     vol=$( pactl list sinks | grep '^[[:space:]]Volume: front-left:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
-    echo -n "${yellow}${vol}%${fg} "
+    echo -n "${yellow} ${vol}%${fg} "
 }
 
 CPU(){
     cpu=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}')
-    #cpu=$(fixed $cpu)
-    echo -n "${blue}${cpu}%${fg}"
+    echo -n "${blue} ${cpu}%${fg}"
 }
 
 MEM(){
@@ -109,12 +107,11 @@ MEM(){
 }
 
 DISK(){
-    echo -n "${red}$(df -h | awk '/home/{print $5}')${fg}"
+    echo -n "${red} $(df -h | awk '/home/{print $5}')${fg}"
 }
 
 TIME(){
-    time=$(date '+%I:%M%p')
-    echo -n "${cyan} ${time}${fg}"
+    echo -n "${cyan} $(date '+%I:%M%p')${fg}"
 }
 
 while true; do
