@@ -45,7 +45,7 @@ CRYPTO() {
 WEATHER() {
     [ "$(stat -c %y /tmp/weather 2>/dev/null | awk '{ print substr($0, 0, 13) }')" = "$(date '+%Y-%m-%d %H')" ] || curl -sf 'wttr.in/Campo%20Grande?format=%t' > /tmp/weather
     weather="$(cat /tmp/weather)"
-    echo -n "${yellow} ${fg}${weather}"
+    echo -n "${yellow} ${fg}${weather}"
 }
 
 MOON() {
@@ -66,7 +66,7 @@ MOON() {
         *) name="" ;;
     esac
 
-    echo -n "${blue} ${fg}$name"
+    echo -n "${blue} ${fg}$name"
 }
 
 UPDATES() {
@@ -103,7 +103,7 @@ CPU(){
 
 MEM(){
     mem=$(free -h | awk '/^Mem.:/ {print $3}' | sed 's/i//g')
-    echo -n "${magenta}${mem}${fg}"
+    echo -n "${green}{mem}${fg}"
 }
 
 DISK(){

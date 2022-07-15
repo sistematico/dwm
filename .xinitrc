@@ -54,7 +54,7 @@ systemctl --user import-environment DISPLAY
 export TERMINAL=st
 export BROWSER=firefox
 export EDITOR=nano
-export VISUAL=codium
+export VISUAL=code
 
 # Dunst
 [ ! -d ${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
@@ -63,18 +63,15 @@ ln -sfT \
     "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"
 
 # Autostart
-xrandr --output HDMI-1 --primary --mode "2560x1440" &
+xrandr --output HDMI-1 --primary --mode "2560x1440"
 numlockx on &
-#feh --bg-fill $HOME/img/unsplash/eberhard-grossgasteiger-8z9nQEZlIZs-unsplash.jpg
-feh --bg-fill $HOME/img/laracasts/inertia.png
 dunst -conf $HOME/.dwm/dunst.conf &
 picom --config $HOME/.dwm/picom.conf &
-
+feh --bg-fill $HOME/img/laracasts/inertia.png &
 $HOME/.dwm/bar.sh &
-$HOME/bitbucket/dwm-tools/xssstate/xsidle.sh slock &
-
+#$HOME/bitbucket/dwm-tools/xssstate/xsidle.sh slock &
 #xautolock -time 10 -locker slock -nowlocker slock -detectsleep -corners 000+ -cornerdelay 3 &
 #xautolock -time 5 -locker fuzzy_lock -notify 20 -notifier 'xset dpms force off' &
-#exec --no-startup-id xautolock -notify 30 -notifier "notify-send -u critical -t 10000 'LOCKING in 30s'" -time 15 -locker "systemctl suspend" -corners "--00"
+#xautolock -notify 30 -notifier "notify-send -u critical -t 10000 'LOCKING in 30s'" -time 15 -locker "systemctl suspend" -corners "--00" &
 
 exec dwm
