@@ -1,0 +1,14 @@
+#!/bin/sh
+
+selected=$(echo -e "Desligar\nReiniciar\nSair\nCancelar" | dmenu -l 4)
+[ -z "$selected" ] || [ "$selected" == "Cancelar" ] && exit
+
+confirm=$(echo -e "Sim\nNão" | dmenu -p "Tem Certeza?")
+[ -z "$confirm" ] || [ "$confirm" != "Sim" ] && exit
+
+case $selected in
+  "Desligar") sudo systemctl poweroff ;;
+  "Reiniciar") sudo systemctl reboot ;;
+  "Sair") killall Xorg ;;
+  *) echo "Opção Inválida!" ;;
+esac

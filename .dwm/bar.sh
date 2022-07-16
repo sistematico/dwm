@@ -10,6 +10,7 @@ yellow="^c#d7ba7d^"
 blue="^c#5e81ac^"
 magenta="^c#b48ead^"
 orange="^c#fb7d47^"
+white="^c#ffffff^"
 
 fixed() {
     printf '%-2s' $1
@@ -33,7 +34,7 @@ NEWS() {
 
 DOWNLOADS() {
     inst=$(ps -ef | grep yt-dlp | grep -v grep | wc -l)
-    [ $inst -gt 0 ] && echo -n "${orange}${inst}${fg}" || echo ""
+    [ $inst -gt 0 ] && echo -n "${orange} ${inst}${fg}" || echo ""
 }
 
 CRYPTO() {
@@ -66,7 +67,7 @@ MOON() {
         *) name="" ;;
     esac
 
-    echo -n "${blue} ${fg}$name"
+    echo -n "${white} ${fg}$name"
 }
 
 UPDATES() {
@@ -103,11 +104,11 @@ CPU(){
 
 MEM(){
     mem=$(free -h | awk '/^Mem.:/ {print $3}' | sed 's/i//g')
-    echo -n "${green}{mem}${fg}"
+    echo -n "${green} ${mem}${fg}"
 }
 
 DISK(){
-    echo -n "${red} $(df -h | awk '/home/{print $5}')${fg}"
+    echo -n "${magenta} $(df -h | awk '/home/{print $5}')${fg}"
 }
 
 TIME(){
@@ -115,6 +116,6 @@ TIME(){
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s %s %s %s' "$(DOWNLOADS)" "$(MOON)" "$(CPU)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
+    xsetroot -name "$(printf '%s %s %s %s %s %s %s' "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
     sleep 5
 done

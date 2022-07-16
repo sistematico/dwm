@@ -2,8 +2,12 @@
 
 [ ! $1 ] && exit
 
-if ! pgrep -x "$1" > /dev/null
+app="$1"
+shift
+args="$@"
+
+if ! pgrep -x "$app" > /dev/null
 then
-    $1
+    $app $args
 fi
 
