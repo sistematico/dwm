@@ -10,11 +10,12 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 10;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 15;        /* vertical padding for statusbar */
+static const int horizpadbar        = 10;       /* horizontal padding for statusbar */
+static const int vertpadbar         = 20;       /* vertical padding for statusbar */
 static const char *fonts[]          = { 
 	"Ubuntu Mono:size=12:antialias=true:autohint=true",
-	"Feather:size=13:antialias=true:autohint=true"	
+	"Feather:size=12:antialias=true:autohint=true",
+	"Moon Phases:size=14:antialias=true:autohint=true"
 };
 static const char dmenufont[]       = "Ubuntu Mono:size=13:antialias=true:autohint=true";
 static const char background[]      = "#282a36";
@@ -100,7 +101,6 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *volumeupcmd[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", NULL };
@@ -165,17 +165,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_equal,scratchpad_remove,{0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-	{ 0, 							XK_F1,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch firefox") },
-	{ 0, 							XK_F2,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch st") },
-	{ 0, 							XK_F3,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch code") },
-	{ 0, 							XK_F4,     spawn, 		   SHCMD("$HOME/.dwm/scripts/launch thunar") },
-	{ 0, 							0xffab,    spawn, 		   {.v = volumeupcmd } },
-	{ 0, 							0xffad,    spawn, 		   {.v = volumedowncmd } },
-	{ MODKEY, 						XK_v,      spawn, 		   SHCMD("clipmenu") },
-	{ MODKEY, 						0x2c,      spawn, 	   SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
-	{ MODKEY, 						0x3b,      spawn, 	   SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
-	{ MODKEY, 						0x2e,      spawn, 	   SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
-	{ Mod1Mask|ControlMask, 		XK_c,      spawn, 	   SHCMD("$HOME/bin/center.sh") },
+	{ 0, 							XK_F1,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch firefox") },
+	{ 0, 							XK_F2,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch st") },
+	{ 0, 							XK_F3,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch code") },
+	{ 0, 							XK_F4,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch thunar") },
+	{ 0, 							0xffab,    spawn, 	{.v = volumeupcmd } },
+	{ 0, 							0xffad,    spawn, 	{.v = volumedowncmd } },
+	{ MODKEY, 						XK_v,      spawn, 	SHCMD("clipmenu") },
+	{ MODKEY, 						0x2c,      spawn, 	SHCMD("mpc prev") },
+	{ MODKEY, 						0x3b,      spawn, 	SHCMD("mpc toggle") },
+	{ MODKEY, 						0x2e,      spawn, 	SHCMD("mpc next") },
+	{ Mod1Mask|ControlMask, 		XK_c,      spawn, 	SHCMD("$HOME/bin/center.sh") },
+	{ 0, 							XK_Print,  spawn, 	SHCMD("maim $HOME/img/shots/print-$(date +%Y-%m-%d_%H%M%S).png") },
 };
 
 /* button definitions */
