@@ -116,6 +116,6 @@ TIME(){
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s %s %s %s %s' "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
+    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s' "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
     sleep 5
 done
