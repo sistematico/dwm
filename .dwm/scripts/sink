@@ -1,11 +1,28 @@
 #!/usr/bin/env bash
 
-sink1="$(pactl list short sinks | awk '{print $2}' | head -n1)"
-sink2="$(pactl list short sinks | awk '{print $2}' | tail -n1)"
-current="$(pactl get-default-sink)"
+get_all_sinks() {
+  pactl --format=json list short sinks | jq -r '.[] | if .state == "RUNNING" then .state="*" else .state="" end | .state + .name'
+}
 
-if [ "$sink1" == "$current" ]; then
-    pactl set-default-sink $sink2
-else
-    pactl set-default-sink $sink1
-fi
+get_default_sink() {
+  pactl --format=json info | jq -r .default_sink_name 
+}
+
+main() {
+  choice=$(printf '%s\n' "$(get_all_sinks)" | \
+      sort | \
+      dmenu -i -l 20 -p 'Sink: ' "$@") || exit 1
+
+      if [ "$choice" ]; then
+        if [[ "${choice}" == "*$(get_default_sink)" ]]; then
+          exit 0
+        fi
+        pactl set-default-sink "${choice}"
+        notify-send "Sink is now: ${choice}"
+      else
+          echo "Program terminated." && exit 0
+      fi
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
+

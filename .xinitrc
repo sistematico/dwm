@@ -67,7 +67,9 @@ xrandr --output HDMI-1 --primary --mode "2560x1440"
 numlockx on &
 dunst -conf $HOME/.dwm/dunst.conf &
 picom --config $HOME/.dwm/picom.conf &
-feh --bg-fill $HOME/img/laracasts/inertia.png &
+#feh --bg-fill $HOME/img/laracasts/inertia.png &
+[ -f $HOME/.bg ] && [ -f $(cat $HOME/.fehbg) ] && feh --bg-fill $(cat $HOME/.bg) &
+[ ! -f $HOME/.bg ] && feh --bg-fill $HOME/img/laracasts/inertia.png &
 $HOME/.dwm/bar.sh &
 #$HOME/bitbucket/dwm-tools/xssstate/xsidle.sh slock &
 #xautolock -time 10 -locker slock -nowlocker slock -detectsleep -corners 000+ -cornerdelay 3 &
