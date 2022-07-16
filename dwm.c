@@ -755,14 +755,18 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 		isCode = 0;
 	text = p;
 
-	//w += lrpad; /* add padding */
+	// Orig
+	// w += lrpad; /* add padding */
+	w += lrpad / 2; /* add padding */
 	ret = x = m->ww - w;
 
 	drw_setscheme(drw, scheme[LENGTH(colors)]);
 	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
 	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
 	drw_rect(drw, x, 0, w, bh, 1, 1);
+	// Orig
 	//x += lrpad / 2;
+	x += lrpad;
 
 	/* process status text */
 	i = -1;

@@ -10,11 +10,11 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 10;       /* horizontal padding for statusbar */
+static const int horizpadbar        = 20;       /* horizontal padding for statusbar */
 static const int vertpadbar         = 20;       /* vertical padding for statusbar */
 static const char *fonts[]          = { 
 	"Ubuntu Mono:size=12:antialias=true:autohint=true",
-	"Feather:size=12:antialias=true:autohint=true",
+	"Feather:size=13:antialias=true:autohint=true",
 	"Moon Phases:size=14:antialias=true:autohint=true"
 };
 static const char dmenufont[]       = "Ubuntu Mono:size=13:antialias=true:autohint=true";
@@ -63,7 +63,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
@@ -167,8 +167,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 	{ 0, 							XK_F1,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch firefox") },
 	{ 0, 							XK_F2,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch st") },
-	{ 0, 							XK_F3,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch code") },
+	{ 0, 							XK_F3,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch code --disable-gpu") },
 	{ 0, 							XK_F4,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch thunar") },
+	{ 0, 							XK_F10,    spawn, 	SHCMD("$HOME/.dwm/scripts/system") },
 	{ 0, 							0xffab,    spawn, 	{.v = volumeupcmd } },
 	{ 0, 							0xffad,    spawn, 	{.v = volumedowncmd } },
 	{ MODKEY, 						XK_v,      spawn, 	SHCMD("clipmenu") },
