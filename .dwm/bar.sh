@@ -20,6 +20,10 @@ SEP(){
     echo -n " " # "^c#666666^$sep"
 }
 
+LOCK() {
+    [ -f /tmp/.nolock ] && echo -n "${green} ${fg}" || echo -n "${red} ${fg}"
+}
+
 NEWS() {
     [ "$(stat -c %y /tmp/news 2>/dev/null | awk '{ print substr($0, 0, 13) }')" = "$(date '+%Y-%m-%d %H')" ] || \
         curl -sGd 'limit=1&t=all' \
@@ -116,6 +120,6 @@ TIME(){
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s' "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
-    sleep 5
+    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s' "$(LOCK)" "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
+    sleep 10
 done

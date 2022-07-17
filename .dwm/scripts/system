@@ -1,6 +1,6 @@
 #!/bin/sh
 
-selected=$(echo -e "Desligar\nReiniciar\nSair\nCancelar" | dmenu -l 4)
+selected=$(echo -e "Desligar\nSuspender\nHibernar\nReiniciar\nSair\nCancelar" | dmenu -l 6)
 [ -z "$selected" ] || [ "$selected" == "Cancelar" ] && exit
 
 confirm=$(echo -e "Sim\nNão" | dmenu -p "Tem Certeza?")
@@ -8,6 +8,7 @@ confirm=$(echo -e "Sim\nNão" | dmenu -p "Tem Certeza?")
 
 case $selected in
   "Desligar") sudo systemctl poweroff ;;
+  "Suspender") sudo systemctl suspend ;;
   "Reiniciar") sudo systemctl reboot ;;
   "Sair") killall Xorg ;;
   *) echo "Opção Inválida!" ;;

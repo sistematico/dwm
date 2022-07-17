@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ ! -f /tmp/.nolock ]; then
+    if pgrep -x "xautolock" > /dev/null; then
+        killall xautolock
+    fi 
+    touch /tmp/.nolock   
+    notify-send -h int:transient:1 -i $HOME/.local/share/icons/dwm/gnome-lockscreen.svg "ScreenLocker" "Screen Locker Desabilitado"
+else
+    if ! pgrep -x "xautolock" > /dev/null; then
+        #xautolock -time 2 -locker slock -detectsleep &
+        $HOME/.dwm/lock.sh &
+    fi
+    rm -f /tmp/.nolock
+    notify-send -h int:transient:1 -i $HOME/.local/share/icons/dwm/gnome-lockscreen.svg "ScreenLocker" "Screen Locker Habilitado"
+fi

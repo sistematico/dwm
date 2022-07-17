@@ -1,26 +1,26 @@
 #!/bin/sh
 
-userresources=$HOME/.Xresources
-usermodmap=$HOME/.Xmodmap
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
+# userresources=$HOME/.Xresources
+# usermodmap=$HOME/.Xmodmap
+# sysresources=/etc/X11/xinit/.Xresources
+# sysmodmap=/etc/X11/xinit/.Xmodmap
 
-# merge in defaults and keymaps
-if [ -f $sysresources ]; then
-    xrdb -merge $sysresources
-fi
+# # merge in defaults and keymaps
+# if [ -f $sysresources ]; then
+#     xrdb -merge $sysresources
+# fi
 
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
-fi
+# if [ -f $sysmodmap ]; then
+#     xmodmap $sysmodmap
+# fi
 
-if [ -f "$userresources" ]; then
-    xrdb -merge "$userresources"
-fi
+# if [ -f "$userresources" ]; then
+#     xrdb -merge "$userresources"
+# fi
 
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
-fi
+# if [ -f "$usermodmap" ]; then
+#     xmodmap "$usermodmap"
+# fi
 
 # start some nice programs
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
@@ -41,42 +41,26 @@ if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
   eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
-# D-BUS
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
-
-# Display
 systemctl --user import-environment DISPLAY
-
-# Gnome Keyring
 #eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
-# Vars
 export TERMINAL=st
 export BROWSER=firefox
 export EDITOR=nano
 export VISUAL=code
 
-# Dunst
 [ ! -d ${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
 ln -sfT \
     "/usr/share/dbus-1/services/${SERVICE:-org.freedesktop.Notifications}.service" \
     "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"
 
-# Autostart
 xrandr --output HDMI-1 --primary --mode "2560x1440"
-
 numlockx on &
 dunst -conf $HOME/.dwm/dunst.conf &
 picom --config $HOME/.dwm/picom.conf &
-
 [ -f $HOME/.fehbg ] && $HOME/.fehbg &
-
 $HOME/.dwm/bar.sh &
-
-#$HOME/bitbucket/dwm-tools/xssstate/xsidle.sh slock &
-#xautolock -time 10 -locker slock -nowlocker slock -detectsleep -corners 000+ -cornerdelay 3 &
-#xautolock -time 5 -locker fuzzy_lock -notify 20 -notifier 'xset dpms force off' &
-#xautolock -notify 30 -notifier "notify-send -u critical -t 10000 'LOCKING in 30s'" -time 15 -locker "systemctl suspend" -corners "--00" &
-xautolock -time 2 -locker slock -detectsleep & 
+$HOME/.dwm/lock.sh &
 
 exec dwm
