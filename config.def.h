@@ -10,8 +10,8 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 20;       /* horizontal padding for statusbar */
-static const int vertpadbar         = 20;       /* vertical padding for statusbar */
+static const int horizpadbar        = 15;       /* horizontal padding for statusbar */
+static const int vertpadbar         = 15;       /* vertical padding for statusbar */
 static const char *fonts[]          = { 
 	"Ubuntu Mono:size=12:antialias=true:autohint=true",
 	"Feather:size=13:antialias=true:autohint=true",
