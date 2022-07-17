@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-WALLPAPERS=()
+WALLPAPERS=("Sair")
 while IFS=  read -r -d $'\0'; do
     WALLPAPERS+=("$REPLY")
 done < <(find $HOME/img/nord -name "*.png" -print0)
 
-WALLPAPERS+=("Cancelar")
-CONFIG=$(printf '%s\n' "${WALLPAPERS[@]}" | dmenu -i -l 20 -p "Wallpapers: ")
-
-[ -z "$CONFIG" ] || [ "$CONFIG" == "Cancelar" ] && exit
-
-feh --bg-fill "$CONFIG"
+while [ "$CONFIG" != "Sair" ]; do
+    CONFIG=$(printf '%s\n' "${WALLPAPERS[@]}" | dmenu -i -l 20 -p "Wallpapers: ")
+    [ -z "$CONFIG" ] || [ "$CONFIG" == "Sair" ] && exit
+    feh --bg-fill "$CONFIG"
+done
