@@ -756,17 +756,15 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 	text = p;
 
 	// Right padding
-	//w += lrpad; /* add padding */
-	w += lrpad / 2; /* add padding */
+	w += lrpad; /* add padding */
+	//w += lrpad / 2; /* add padding */
 	ret = x = m->ww - w;
 
 	drw_setscheme(drw, scheme[LENGTH(colors)]);
 	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
 	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
 	drw_rect(drw, x, 0, w, bh, 1, 1);
-	// Width
-	//x += lrpad / 2;
-	x += lrpad;
+	x += lrpad / 2;
 
 	/* process status text */
 	i = -1;
@@ -1194,6 +1192,8 @@ manage(Window w, XWindowAttributes *wa)
 	updatewindowtype(c);
 	updatesizehints(c);
 	updatewmhints(c);
+	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
 	if (!c->isfloating)

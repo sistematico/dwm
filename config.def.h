@@ -58,6 +58,7 @@ static const Rule rules[] = {
 	{ "mpv",      NULL,       NULL,       0,            1,           -1 },
 	{ "Pavucontrol", NULL,    NULL,       0,            1,           -1 },
 	{ "Xarchiver", NULL,      NULL,       0,            1,           -1 },
+	{ "Viewnior", NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -101,7 +102,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
+// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-h", "25", NULL };
+static const char *dmenucmd[] = { "dmenu_run_i", "-m", dmenumon, "-fn", dmenufont, "-h", "25", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *volumeupcmd[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", NULL };
 static const char *volumedowncmd[]  = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-2%", NULL };
@@ -173,6 +175,8 @@ static Key keys[] = {
 	{ 0, 				XK_F6,     spawn, 	SHCMD("$HOME/.dwm/scripts/sink") },
 	{ 0, 				XK_F9,     spawn, 	SHCMD("$HOME/.dwm/scripts/bg") },
 	{ 0, 				XK_F10,    spawn, 	SHCMD("$HOME/.dwm/scripts/system") },
+	{ 0, 				XK_F11,    spawn, 	SHCMD("$HOME/.dwm/scripts/lock") },
+	{ 0, 				XK_F12,    spawn, 	SHCMD("$HOME/.dwm/scripts/vdown") },
 	{ 0, 				0xffab,    spawn, 	{.v = volumeupcmd } },
 	{ 0, 				0xffad,    spawn, 	{.v = volumedowncmd } },
 	{ MODKEY, 			XK_v,      spawn, 	SHCMD("clipmenu") },
