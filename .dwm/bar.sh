@@ -21,7 +21,7 @@ SEP(){
 }
 
 LOCK() {
-    [ -f /tmp/.nolock ] && echo -n "${green} ${fg}" || echo -n "${red} ${fg}"
+    [ ! -f /tmp/.nolock ] && echo -n " ${red}${fg}" || echo -n " ${green}${fg}"
 }
 
 NEWS() {
@@ -120,6 +120,6 @@ TIME(){
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s' "$(LOCK)" "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
+    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s' "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)" "$(LOCK)")"
     sleep 10
 done

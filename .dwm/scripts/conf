@@ -1,26 +1,35 @@
 #!/usr/bin/env bash
 
 CONFIGS=(
+    "main - $HOME/bitbucket/dwm-main"
     "dwm - $HOME/bitbucket/dwm"
     "st - $HOME/bitbucket/st"
     "dmenu - $HOME/bitbucket/dmenu"
+    "gtk4 - $HOME/.config/gtk-4.0/settings.ini"
+    "gtk3 - $HOME/.config/gtk-3.0/settings.ini"
+    "gtk2 - $HOME/.gtkrc-2.0"
     "Cancelar"
 )
-CONFIG=$(printf '%s\n' "${CONFIGS[@]}" | dmenu -i -l 4 -p "Editar Sistema: ")
+CONFIG=$(printf '%s\n' "${CONFIGS[@]}" | dmenu -i -l 7 -p "Editar Sistema: ")
 [ -z "$CONFIG" ] || [ "$CONFIG" == "Cancelar" ] && exit
 
 CFG=$(printf '%s\n' "${CONFIG}")
 CFG_NAME="$(echo $CFG | awk '{print $1}')"
 CFG_PATH="$(echo $CFG | awk '{print $NF}')"
-ACTION=$(echo -e "Editar\nReconstruir\nCancelar" | dmenu -i -l 20 -p "Ação: ")
 
-case $ACTION in
-  "Reconstruir") 
-        cd $CFG_PATH
-        rm -f config.h
-        make
-        sudo make install clean
-    ;;
-  "Editar") cd $CFG_PATH && code $CODE_FLAGS . ;;
-  *) exit ;;
-esac
+if [[ $CFG_NAME == gtk* ]]; then
+  code $CFG_PATH
+else 
+  ACTION=$(echo -e "Editar\nReconstruir\nCancelar" | dmenu -i -l 20 -p "Ação: ")
+
+  case $ACTION in
+    "Reconstruir") 
+          cd $CFG_PATH
+          rm -f config.h
+          make
+          sudo make install clean
+      ;;
+    "Editar") cd $CFG_PATH && code $CODE_FLAGS . ;;
+    *) exit ;;
+  esac
+fi
