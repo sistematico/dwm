@@ -34,11 +34,16 @@ ln -sfT \
     "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"
 
 xrandr --output HDMI-1 --primary --mode "2560x1440"
+
 numlockx on &
 dunst -conf $HOME/.dwm/dunst.conf &
 picom --config $HOME/.dwm/picom.conf &
+
 [ -f $HOME/.fehbg ] && $HOME/.fehbg &
+
 $HOME/.dwm/bar.sh &
+
 #$HOME/.dwm/lock.sh &
+$HOME/bitbucket/xssstate/xsidle.sh slock &
 
 exec dwm

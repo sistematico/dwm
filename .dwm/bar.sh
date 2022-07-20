@@ -21,7 +21,9 @@ SEP(){
 }
 
 LOCK() {
-    [ ! -f /tmp/.nolock ] && echo -n " ${red}${fg}" || echo -n " ${green}${fg}"
+    local secs
+    secs=$(xset -q | awk '/timeout:/{print $2}')
+    [ $secs -eq 0 ] && echo -n " ${green}${fg}" || echo -n " ${red} ${secs}s${fg}"
 }
 
 NEWS() {
@@ -120,6 +122,6 @@ TIME(){
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s' "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)" "$(LOCK)")"
+    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s %s' "$(WEATHER)" "$(MOON)" "$(DOWNLOADS)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)" "$(LOCK)")"
     sleep 10
 done
