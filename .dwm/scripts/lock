@@ -1,13 +1,17 @@
 #!/bin/sh
 
-local secs timeout
-secs=$(xset -q | awk '/timeout:/{print $2}')
-timeout=120
+local secs=$(xset -q | awk '/timeout:/{print $2}')
+local timeout=120
+local stand_time=600
+local suspend_time=0 
+local off_time=1800
 
 if [ $secs -eq 0 ]; then
     notify-send -h int:transient:1 -i $HOME/.local/share/icons/dwm/gnome-lockscreen.svg "ScreenLocker" "Screen Locker Habilitado"
+    xset dpms $stand_time $suspend_time $off_time
     xset s $timeout
 else
     notify-send -h int:transient:1 -i $HOME/.local/share/icons/dwm/gnome-lockscreen.svg "ScreenLocker" "Screen Locker Desabilitado"
+    xset -dpms
     xset s 0
 fi
