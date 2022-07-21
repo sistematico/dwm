@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-WALLPAPERS=("Sair")
+WALLPAPERS_PATH="$HOME/img/dwm"
+
+WALLPAPERS=()
 while IFS=  read -r -d $'\0'; do
     WALLPAPERS+=("$REPLY")
-done < <(find $HOME/img/nord -name "*.png" -print0)
+done < <(find $WALLPAPERS_PATH -name "*.png" -print0)
+WALLPAPERS+=("Sair")
 
 while [ "$CONFIG" != "Sair" ]; do
     CONFIG=$(printf '%s\n' "${WALLPAPERS[@]}" | dmenu -i -l 20 -p "Wallpapers: ")

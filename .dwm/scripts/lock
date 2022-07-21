@@ -1,7 +1,8 @@
 #!/bin/sh
 
 local secs=$(xset -q | awk '/timeout:/{print $2}')
-local timeout=120
+
+local timeout=180
 local stand_time=600
 local suspend_time=0 
 local off_time=1800
