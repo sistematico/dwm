@@ -20,12 +20,20 @@ SEP(){
     echo -n " " # "^c#666666^$sep"
 }
 
-LOCK() {
+LOCK2() {
     local timeout=$(xset -q | awk '/timeout:/{print $2}')
+    local cycle=$(xset -q | awk '/timeout:/{print $4}')
     local standby=$(xset -q | awk '/Standby:/{print $2}')
     local suspend=$(xset -q | awk '/Standby:/{print $4}')
     local off=$(xset -q | awk '/Standby:/{print $6}')
-    [ $timeout -eq 0 ] && echo -n " ${green}${fg}" || echo -n " ${red} ${timeout}s/${standby}s/${suspend}s/${off}s${fg}"
+
+    [ $timeout -eq 0 ] && echo -n " ${green}${fg}" || echo -n " ${red} t:${timeout} / c:${cycle} / sb:${standby} / s:${suspend} / o:${off}${fg}"
+}
+
+LOCK() {
+    [ $(xset -q | awk '/timeout:/{print $2}') -eq 0 ] && \
+        echo -n " ${green}${fg}" || \
+        echo -n " ${red} $(xset -q | awk '/timeout:/{print $2}')${fg}"
 }
 
 NEWS() {
@@ -124,6 +132,6 @@ TIME(){
 }
 
 while true; do
-    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s %s' "$(DOWNLOADS)" "$(MOON)" "$(WEATHER)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)" "$(LOCK)")"
+    xsetroot -name "$(printf '%s %s %s %s %s %s %s %s %s' "$(DOWNLOADS)" "$(MOON)" "$(WEATHER)" "$(CPU)" "$(MEM)" "$(DISK)" "$(TEMP)" "$(VOL)" "$(TIME)")"
     sleep 10
 done

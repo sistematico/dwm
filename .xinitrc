@@ -28,22 +28,21 @@ export BROWSER=firefox
 export EDITOR=nano
 export VISUAL=code
 
+# Slock
+export LOCK=180
+export SUSPEND=1800
+
 [ ! -d ${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
 ln -sfT \
     "/usr/share/dbus-1/services/${SERVICE:-org.freedesktop.Notifications}.service" \
     "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"
 
-xrandr --output HDMI-1 --primary --mode "2560x1440"
-
+xrandr --output HDMI-A-0 --primary --mode "2560x1440"
 numlockx on &
 dunst -conf $HOME/.dwm/dunst.conf &
 picom --config $HOME/.dwm/picom.conf &
-
 [ -f $HOME/.fehbg ] && $HOME/.fehbg &
-
 $HOME/.dwm/bar.sh &
-
-#$HOME/.dwm/lock.sh &
-$HOME/bitbucket/xssstate/xsidle.sh slock &
+$HOME/.dwm/lock.sh &
 
 exec dwm
