@@ -30,7 +30,7 @@ export VISUAL=code
 
 # Slock
 export LOCK=180
-export SUSPEND=1800
+export SUSPEND=3600
 
 [ ! -d ${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
 ln -sfT \
