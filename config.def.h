@@ -28,7 +28,8 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+//static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const char *tagsel[][2] = {
 	{ "#f2777a", "#282a36" },
@@ -54,11 +55,16 @@ static const Rule rules[] = {
 	{ "Code",     NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "Thunar",   NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "spotify",  NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Steam",    NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Gimp",     NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "Inkscape", NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "TelegramDesktop", NULL, NULL,      1 << 8,       0,           -1 },
 	{ "Agave",    NULL,       NULL,       0,            1,           -1 },
 	{ "mpv",      NULL,       NULL,       0,            1,           -1 },
 	{ "Pavucontrol", NULL,    NULL,       0,            1,           -1 },
 	{ "Xarchiver", NULL,      NULL,       0,            1,           -1 },
 	{ "Viewnior", NULL,       NULL,       0,            1,           -1 },
+	{ NULL,       NULL,       "Friends List", 0,        1,           -1 },
 };
 
 /* layout(s) */
@@ -112,7 +118,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ Mod1Mask,                     XK_F2,     spawn,          {.v = dmenucmd } },
-	{ MODKEY,             			XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,						XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -168,7 +174,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 	{ 0, 				XK_F1,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch firefox") },
-	{ 0, 				XK_F2,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch st") },
 	{ 0, 				XK_F3,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch code --disable-gpu") },
 	{ 0, 				XK_F4,     spawn, 	SHCMD("$HOME/.dwm/scripts/launch thunar") },
 	{ 0, 				XK_F5,     spawn, 	SHCMD("$HOME/.dwm/scripts/conf") },
@@ -185,6 +190,7 @@ static Key keys[] = {
 	{ MODKEY, 			0x2e,      spawn, 	SHCMD("mpc next") },
 	{ Mod1Mask|ControlMask, XK_c,  spawn, 	SHCMD("$HOME/bin/center.sh") },
 	{ 0, 				XK_Print,  spawn, 	SHCMD("maim $HOME/img/shots/print-$(date +%Y-%m-%d_%H%M%S).png") },
+	{ MODKEY, 			XK_Print,  spawn, 	SHCMD("$HOME/.dwm/scripts/scast") },
 };
 
 /* button definitions */
